@@ -66,7 +66,7 @@ then
     fi
     FRONTEND_URI=$RUPPELLS_SOCKETS_FRONTEND_URI
 fi
-FRONTEND_PORT=${FRONTEND_URI##tcp://}; FRONTEND_PORT=${FRONTEND_PORT#*:}
+FRONTEND_PORT=${FRONTEND_URI##tcp://}; FRONTEND_PORT=${FRONTEND_PORT#*:}; FRONTEND_PORT=${FRONTEND_PORT%*/}
 
 if [[ -z $BACKEND_PORT ]]
 then
@@ -128,7 +128,7 @@ echo -n "Connecting tcp://localhost:${BACKEND_PORT}/ to ${FRONTEND_URI}... "
 ssh -o LogLevel=quiet -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o TCPKeepAlive=yes -nN -i /tmp/$$.key -R $FRONTEND_PORT:127.0.2.1:$BACKEND_PORT -l $SSH_USER $SSH_HOST $KEY_CMD -p $SSH_PORT & SSHPID=$!
 echo "done"
 echo -n "Running ${CMD}... "
-RUPPELLS_SOCKETS_LOCAL_PORT=1337 $CMD & CMDPID=$!
+RUPPELLS_SOCKETS_LOCAL_PORT=$BACKEND_PORT $CMD & CMDPID=$!
 echo "done"
 
 while $(kill -0 $CMDPID) && $(kill -0 $SSHPID); do
