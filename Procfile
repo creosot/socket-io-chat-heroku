@@ -1,1 +1,1 @@
-web: ./rs-conn node web.js
+web: ./rs-conn node chat.js tcp http
