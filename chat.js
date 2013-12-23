@@ -1,17 +1,22 @@
 
 var http = false, tcp = false
 
-process.argv.forEach(function (val, index, array) {
-  switch(val)
-  {
-    case "http":
-      http = true
-      break;
-    case "tcp":
-      tcp = true
-      break
-  }
-});
+if ( process.argv.length > 0 ) {
+    process.argv.forEach(function (val, index, array) {
+        switch(val)
+        {
+            case "http":
+                http = true
+                break;
+            case "tcp":
+                tcp = true
+                break
+        }
+    });
+} else {
+    http = true;
+    tcp = true;
+}
 
 // chat functions
 var peeps = {};
