@@ -45,8 +45,12 @@ if ( http ) {
     var express = require('express'), app = express()
       , http = require('http')
       , server = http.createServer(app)
-      , io = require('socket.io').listen(server)
       , jade = require('jade');
+
+    var sockjs = require('sockjs');
+    var chatSocket = sockjs.createServer();
+    chatSocket.installHandlers(server, {prefix:'/chat'});
+
 
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
@@ -63,19 +67,24 @@ if ( http ) {
     });
     server.listen(http_port);
     console.log("HTTP listening on " + http_port);
-    io.sockets.on('connection', function (socket) {
-        var name = "HTTP -> " + socket.handshake.address.address + ":" + socket.handshake.address.port;
+    chatSocket.on('connection', function(conn) {
+        var name = "HTTP -> " + conn.remoteAddress + ":" + conn.remotePort;
         peeps[name] = {
-            'send' : function (message, sender) { socket.emit('message', { 'message' : message, 'name' : sender }); }
+            'send' : function (message, sender) { conn.write(JSON.stringify({ 'message' : message, 'name' : sender })); }
         };
-        socket.emit('message', { 'message' : "Welcome " + name, 'name' : "Server"});
+        conn.write(JSON.stringify({ 'message' : "Welcome " + name, 'name' : "Server"}));
         joined(name);
-        socket.on('message', function (message) {
+        conn.on('data', function (message) {
             broadcast(message, name);
         });
-        socket.on('disconnect', function () {
+        conn.on('disconnect', function () {
             left(name);
         });
+
+        conn.on('data', function(message) {
+            conn.write(message);
+        });
+        conn.on('close', function() {});
     });
 }
 
