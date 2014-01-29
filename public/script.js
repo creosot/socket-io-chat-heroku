@@ -13,7 +13,6 @@ function sentMessage() {
 }
 sock.onmessage = function(e) {
         data = JSON.parse(e.data)
-	console.log(data);
 	addMessage(data.message, data.name);
 };
 $(function() {
