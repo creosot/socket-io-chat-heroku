@@ -55,7 +55,11 @@ if ( http ) {
         app.use(express.static(__dirname + '/public'));
     });
     app.get('/', function(req, res){
-        res.render('home.jade');
+        var tcpURI = null;
+        if ( tcp ) {
+            tcpURI = process.env.RUPPELLS_SOCKETS_FRONTEND_URI;
+        }
+        res.render('home.jade', { 'tcpURI': tcpURI });
     });
     server.listen(http_port);
     console.log("HTTP listening on " + http_port);

@@ -9,6 +9,8 @@ html
 		div.container
 			header
 				h1 A Chat application with Node.js and Socket.io
+			if tcpURI
+				p To join the chat over TCP use your favourite TCP client to connect to #{tcpURI}
 			div#chatEntries
 			div#chatControls
 				input(type='text')#messageInput
