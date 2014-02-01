@@ -102,7 +102,10 @@ if ( tcp ) {
         socket.on('data', function (data) {
             broadcast(data.toString().replace(/(\r\n|\n|\r)/gm,""), name);
         });
-        socket.on('end', function () {
+        socket.on('close', function (had_error) {
+            if (had_error) {
+                console.log("I closed due to an error!");
+            }
             left(name);
         });
     }).listen(ruppells_sockets_port);
