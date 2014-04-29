@@ -1,3 +1,0 @@
-[submodule "lib/sockets-connect"]
-	path = lib/sockets-connect
-	url = ssh://git@bitbucket.org/ruppells/sockets-connect.git
