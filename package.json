@@ -1,19 +1,21 @@
 {
     "name": "sock_tcp",
     "description": "example",
-    "version": "0.0.1",
+    "version": "0.1",
 
     "dependencies": {
         "moment": "*"
     },
-
+    "scripts": {
+        "start": "node app.js",
+        "debug": "node debug app.js"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/creosot/soher.git"
     },
-
     "engines": {
-        "node": "0.10.32",
-        "npm": "1.4.28"
+        "node": "0.10.x",
+        "npm": "1.4.x"
     }
 }
