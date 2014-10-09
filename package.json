@@ -1,7 +1,7 @@
 {
     "name": "sock_tcp",
-    "description": "example",
-    "version": "0.1",
+    "description": "example_sock",
+    "version": "0.0.1",
 
     "dependencies": {
         "moment": "*"
