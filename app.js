@@ -3,8 +3,8 @@
  */
 //var myCRC16 = require('./libs/crc.js');
 var net = require('net');
-//var moment = require('moment');
-//moment.lang('ru');
+var moment = require('moment');
+moment.lang('ru');
 //var streams = Array();
 var im;
 /*var count_record;
